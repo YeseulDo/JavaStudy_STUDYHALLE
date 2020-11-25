@@ -359,4 +359,9 @@ REF : https://docs.oracle.com/en/java/javase/13/language/switch-expressions.html
 
 switch문과 switch식(?)의 가장 큰 차이는 반환값인 듯 하다.  
 arrow case뿐만 아니라 colon case 역시 양 쪽에서 다 사용가능하지만,  
-yield문에 의해 반환되는 값이 존재하는지의 유무에 따라 switch문과 switch식이 구분가능하다는 말 인듯..?  
+yield문에 의해 반환되는 값이 존재하는지의 유무에 따라 switch문과 switch식이 구분가능하다는 말 인듯..?   
+
+
+---
+#### REFERENCE  
+남궁성, 「자바의 정석」, 도우출판, 2016  
