@@ -47,6 +47,7 @@ char c3 = 'a' + 1;          // c3 = 'b';
   명시적으로 캐스팅해주지 않을 경우 컴파일 에러가 발생한다.  
 - c3의 경우, 'a' + 1 는 리터럴간의 연산이기 때문에 명시적으로 형변환을 해주지 않아도 에러가 발생하지 않는다.  
   리터럴간의 연산은 실행과정동안 변하는 값이 아니기 때문에, 컴파일 시 컴파일러가 미리 계산해서 그 결과로 대체함으로써 코드를 보다 효율적으로 만든다.  
+<br>
 
 
 ### ▶ 나머지연산자 %  
@@ -169,7 +170,9 @@ String str2 = new String("abc");
 str1 == str2; // false  
 str1.equals(str2); // true  
 ```
-비교연산자는 str1과 str2가 같은 객체인지를 비교하고, equals()는 문자열의 내용이 같은 지 비교한다.
+비교연산자는 str1과 str2가 같은 객체인지를 비교하고, equals()는 문자열의 내용이 같은 지 비교한다.  
+<br>
+
 
 ## 논리 연산자  
 
@@ -210,6 +213,8 @@ instanceof를 이용한 연산결과로 true를 얻었다는 것은, 참조변�
 실제 인스턴스와 같은 타입의 연산 이외에, 조상타입과의 연산에도 true를 결과로 얻는다.  
 
 값이 null인 참조변수에 대해 instanceof연산을 수행 시 false를 결과로 얻는다.
+
+<img src="3_1.JPG"> 
 <br>
 
 
@@ -233,10 +238,38 @@ instanceof를 이용한 연산결과로 true를 얻었다는 것은, 참조변�
 |  i %= 3 |  i = i % 3 |
 | i <<= 3 | i = i << 3 |
 |  i ^= 3 |  i = i ^ 3 |
-|   ...   |     ...    |
+|   ...   |     ...    |  
+<br>
 
 
 ## 화살표(->) 연산자  
+
+__람다식 Lambda expression__  
+메서드를 하나의 식으로 표현한 것으로 함수를 간략하면서도 명확한 식으로 표현할 수 있게 해 준다.  
+람다식의 도입으로 인해 자바는 객체지향언어임 동시에 함수형언어의 기능까지 갖추게 되었다.
+
+```
+(매개변수 선언) -> { 문장들 : 함수/메서드의 내용부분 }  
+(int a, int b) -> { return a > b ? a : b; }  
+```
+ 
+메서드를 람다식으로 표현하면 메서드의 이름과 반환값이 없어지므로, 람다식을 익명함수(anonymous function)라고도 한다.  
+람다식은 메서드의 매개변수로 전달되어지는 것이 가능하고, 메서드의 결과로 반환될 수도 있다.  
+ 
+ 
+```
+ (a, b) -> a > b ? a : b
+```
+
+- 반환값이 있는 메서드의 경우 return문 대신 식으로 대신할 수 있다. 식의 연산결과가 반환값이 된다.  
+- 람다식에 선언된 매개변수의 타입은 추론이 가능한 경우 생략가능한데, 대부분의 경우에 생략이 가능하다.  
+    반환타입이 없는 이유도 항상 추론이 가능하기 때문이다. 
+- 선언된 매개변수가 하나인 경우에는 괄호()를 생략가능하다. 매개변수의 타입이 선언된 경우는 생략불가능하다.  
+- 괄호 {} 안의 문장이 하나일 때는 {} 를 생략가능하다. 그러나 return문의 경우는 생략불가능하다.  
+    또한 {}를 생략하는 경우 문장의 끝에 ; 를 붙이지 않아야 한다.
+<br>
+
+
 ## 3항 연산자  
 
 ### 단항연산자  
@@ -277,7 +310,7 @@ boolean, char을 제외한 기본형에만 사용할 수 있다.
 result = (x > y) ? x : y;  
 ```  
 x > y가 true이면 result에 x의 값이 저장되고, false이면 y의 값이 저장된다.  
-식1고 식2의 타입이 다른 경우, 산술변환이 발생한다.
+식1고 식2의 타입이 다른 경우, 산술변환이 발생한다.  
 <br>
 
 
@@ -299,6 +332,31 @@ __연산자의 결합규칙__
 
 
 ## (optional) Java 13. switch 연산자  
-https://docs.oracle.com/en/java/javase/13/language/switch-expressions.html
+
+REF : https://docs.oracle.com/en/java/javase/13/language/switch-expressions.html  
+읽고 이해한대로 정리했기 때문에 잘못 이해한 부분이 있을수도 있습니다..?  
+
+- __Switch Expressions__  
+    기존의 switch문과는 다르게, 단어 그대로 하나의 식 expression 으로써 연산결과를 반환한다.   
+    반환값이 존재하기 때문에 문장 statement 내에서 사용하거나, 변수에 저장하는 것이 가능하다.   
+
+- __arrow case__  
+    break문의 부재로 인한 fall-through를 방지할 수 있는 형태의 구문.  
+    <sup>※ fall-through : switch-case문에서 break를 걸지 않았을 경우, 다음 case문이 실행되는 것.</sup>  
+    ```
+    case label_1, label_2, ..., label_n -> expression;|throw-statement;|block  
+    ```
+    화살표 오른쪽에 위치하는 값이나 식의 결과가 switch expression의 결과값이 된다.  
+    기존의 switch-case 구문에서도 colon case 대신 arrow case를 사용할 수 있다.  
+    
+
+- __yield statement__  
+    switch expression 에서 break문을 대체해서 사용하는 구문.  
+    _It takes one argument, which is the value that the case label produces in a switch expression._  
+    하나의 인자를 가지는데, case label이 switch expression에서 만드는 결과 값...  
+    뭐래 대충 switch expression의 반환값을 이야기 하는것같음.  
 
 
+switch문과 switch식(?)의 가장 큰 차이는 반환값인 듯 하다.  
+arrow case뿐만 아니라 colon case 역시 양 쪽에서 다 사용가능하지만,  
+yield문에 의해 반환되는 값이 존재하는지의 유무에 따라 switch문과 switch식이 구분가능하다는 말 인듯..?  
