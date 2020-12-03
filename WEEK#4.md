@@ -81,6 +81,135 @@ __목표 : 자바가 제공하는 제어문 학습하기.__
   }  
 ``` 
 
+
+
+#### 예제  
+
+```java
+package com.studyhalle;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        int score = 0;
+        char grade = ' ', opt = '0';
+
+        System.out.print("점수를 입력하세요. > ");
+
+        Scanner sc = new Scanner(System.in);
+        score = sc.nextInt();
+
+        System.out.printf("점수는 %d 입니다.%n", score);
+
+        if (score >= 90) {
+            grade = 'A'; // score가 90점이상이면 A
+            if(score >= 98) {
+                opt = '+'; // score가 90점이상, 98점이상 A+
+            } else if (score < 94) {
+                opt = '-'; // score가 90점이상, 94점미만 A-
+            }
+
+        } else if (score >= 80) {
+            grade = 'B'; // score가 80점이상이면 B
+            if(score >= 88) {
+                opt = '+';
+            } else if (score < 84) {
+                opt = '-';
+            }
+
+        } else {
+            grade = 'C'; // 나머지는 C
+        }
+
+        System.out.printf("당신의 학점은 %c%c입니다.%n", grade, opt);
+    }
+}
+
+```
+#### 실행결과  
+
+<img src="4_1.JPG" width=70%>  
+<br>
+
+
+### ▶ switch  
+- 단 하나의 조건식으로 많은 경우의 수를 처리할 수 있고, 표현도 간결하다.  
+  if문은 조건식의 결과가 참과 거짓 두 가지 밖에 없기 때문에, 경우의 수가 많아질 수록 복잡해지고 처리시간도 길어진다.  
+  따라서 처리할 경우의 수가 많은 경우에는 if문 보다 switch문이 효율적이다.  
+  다만, switch문은 제약조건이 있기 때문에 사용할 수 없는 경우도 있다.  
+  
+```
+  switch (조건식) {  
+    case 값1 : // 조건식의 결과가 값 1과 같을 경우
+        // 이하의 문장들을 수행
+        // ...
+        break;
+    case 값2 : // 조건식의 결과가 값 2와 같을 경우
+        // ...
+        break;
+    case 값3 : 
+          .
+          .
+          .
+    default : // 조건식의 결과와 일치하는 case문이 없을 경우  
+      // ...  
+  }  
+```
+<br>
+
+
+- break : switch문을 빠져나올 수 있으며, 각 case문의 영역을 구분하는 역할을 한다.  
+  각 case문의 끝에 break문이 없으면 switch문이 끝날 때 까지의 모든 문장들을 수행하므로 생략하지 않는 것이 원칙이다.  
+  다만 경우에 따라서 고의적으로 break문을 생략하는 경우도 있다.  
+
+#### 예제  
+``` java
+package com.studyhalle;
+
+import java.util.Scanner;
+
+public class SwitchEx {
+
+    public static void main(String[] args) {
+        int level = 0;
+
+        System.out.print("레벨을 입력하세요. (1,2,3) > ");
+
+        Scanner sc = new Scanner(System.in);
+        level = sc.nextInt();
+
+        switch (level) {
+            case 3 :
+                System.out.println("삭제권한이 부여되었습니다.");
+            case 2 :
+                System.out.println("쓰기권한이 부여되었습니다.");
+            case 1 :
+                System.out.println("읽기권한이 부여되었습니다.");
+        }
+    }
+
+}
+```
+#### 실행결과  
+
+<img src="4_2.JPG" width=70%>  
+
+- 레벨에 따라 해당하는 권한을 부여받게 된다. 3일 경우 삭제, 쓰기, 읽기 권한이 모두 부여되고, 1일 경우는 읽기 권한만 갖게 된다.  
+<br>
+
+  
+- default : 조건식의 결과와 일치하는 case문이 없을 경우 수행되는 문장이다.  
+  if문의 else문과 같은 역할로, 위치는 상관없으나 보통 마지막에 놓기 때문에 break문이 필요하지 않다.  
+
+
+#### switch문의 제약조건  
+- switch문의 조건식의 결과는 정수 또는 문자열이어야 한다.
+- case문의 값은 정수 상수만 가능하며, 중복되지 않아야 한다.
+  변수, 실수, 문자열은 case문의 값으로 사용할 수 없다.
+
+
 ---  
 #### 과제 0. JUnit 5 학습하세요.  
 <sup> - 인텔리J, 이클립스, VS Code에서 JUnit 5로 테스트 코드 작성하는 방법에 익숙해 질 것.</sup>
