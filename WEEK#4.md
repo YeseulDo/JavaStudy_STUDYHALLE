@@ -330,6 +330,72 @@ public class ForEachEx {
 <br>
 
 
+### ▶ while  
+
+- 조건식, 블럭만으로 이루어져 있으며 조건식이 true인 동안, 즉 조건식이 false가 될 때까지 블럭내의 문장을 반복한다.  
+
+```
+  while (조건식) {
+    // 조건식의 연산결과가 true 인 동안, 반복될 문장
+  }
+```  
+
+- 먼저 조건식을 평가한 후 조건식이 false일 경우 문장 전체를 벗어나고, true일 경우 블럭내의 문장을 수행한 후 다시 조건식을 평가한다.  
+- 일반적으로 for문과 while문은 서로 변환이 가능하지만, 초기화나 증감식이 필요하지 않은 경우라면 while문이 더 적합하다.  
+- for문과 달리 while문의 조건식은 생략이 불가능하다. for문의 조건식 생략과 같은 효과를 얻고싶다면 조건식에 true를 넣으면 된다.  
+
+#### 예제  
+
+```java
+package com.studyhalle;
+
+import java.util.Scanner;
+
+public class WhileEx {
+    public static void main(String[] args) {
+        int num = 0, sum = 0;
+        System.out.print("각 자리의 합을 구합니다. 숫자를 입력하세요 >> ");
+
+        Scanner sc = new Scanner(System.in);
+        String tmp = sc.nextLine() ;
+        num = Integer.parseInt(tmp);
+
+        while(num != 0) {
+            sum += num%10;
+            System.out.printf("sum=%3d, num= %d%n", sum, num);
+            num = num/10;
+        }
+        
+        System.out.println("결과 : "+sum);
+}
+```  
+
+#### 실행결과
+<img src="4_6.JPG" width=60%>  
+<br>
+
+
+
+### ▶ do-while  
+- while 문의 변형으로, while문의 조건문과 블럭의 순서를 바꿔놓은 것이다.  
+- while문과 반대로 블럭 내의 문장을 먼저 수행한 후 조건식을 평가한다.  
+- while문이 조건식의 결과에 따라 블럭 내 문장이 한 번도 수행되지 않을 수 있으나,
+  do-while문은 최소 한 번은 수행된다.
+```
+  do {
+    // 조건식의 연산결과가 true일 경우 수행될 문장
+  } while (조건식);
+```
+
+
+### ▶ break, continue  
+
+- break : 조건문, 반복문에서 사용할 수 있는데, 자신이 포함된 가장 가까운 반복문을 벗어난다.  
+  주로 if문과 함께 특정 조건을 만족하면 반복문을 벗어나도록 사용된다.  
+- continue : 반복문 내에서만 사용되며, 반복이 진행되는 중 continue를 만나면 반복문의 끝으로 이동하여 다음 반복으로 넘어간다.
+  for문의 경우 증감식으로, while문의 경우 조건식으로 이동한다.
+  반복문 전체를 벗어나지 않으며, continue문 이후의 문장들을 수행하지 않고 다음 반복을 계속해서 수행할 수 있다.
+
 ---  
 #### 과제 0. JUnit 5 학습하세요.  
 <sup> - 인텔리J, 이클립스, VS Code에서 JUnit 5로 테스트 코드 작성하는 방법에 익숙해 질 것.</sup>
