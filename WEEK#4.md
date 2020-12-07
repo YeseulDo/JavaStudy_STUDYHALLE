@@ -376,7 +376,7 @@ public class WhileEx {
 
 
 
-### ▶ do-while  
+### do-while  
 - while 문의 변형으로, while문의 조건문과 블럭의 순서를 바꿔놓은 것이다.  
 - while문과 반대로 블럭 내의 문장을 먼저 수행한 후 조건식을 평가한다.  
 - while문이 조건식의 결과에 따라 블럭 내 문장이 한 번도 수행되지 않을 수 있으나,
@@ -396,30 +396,62 @@ public class WhileEx {
   for문의 경우 증감식으로, while문의 경우 조건식으로 이동한다.
   반복문 전체를 벗어나지 않으며, continue문 이후의 문장들을 수행하지 않고 다음 반복을 계속해서 수행할 수 있다.
 
----  
-#### 과제 0. JUnit 5 학습하세요.  
-<sup> - 인텔리J, 이클립스, VS Code에서 JUnit 5로 테스트 코드 작성하는 방법에 익숙해 질 것.</sup>
-#### 과제 1. live-study 대시 보드를 만드는 코드를 작성하세요.  
-<sup> - 깃헙 이슈 1번부터 18번까지 댓글을 순회하며 댓글을 남긴 사용자를 체크 할 것.</sup>  
-<sup> - 참여율을 계산하세요. 총 18회에 중에 몇 %를 참여했는지 소숫점 두자리가지 보여줄 것.</sup>  
-<sup> - Github 자바 라이브러리를 사용하면 편리합니다.</sup>  
-<sup> - 깃헙 API를 익명으로 호출하는데 제한이 있기 때문에 본인의 깃헙 프로젝트에 이슈를 만들고 테스트를 하시면 더 자주 테스트할 수 있습니다.</sup>  
-#### 과제 2. LinkedList를 구현하세요.</sup>  
-<sup> - LinkedList에 대해 공부하세요.</sup>  
-<sup> - 정수를 저장하는 ListNode 클래스를 구현하세요.</sup>  
-<sup> - ListNode add(ListNode head, ListNode nodeToAdd, int position)를 구현하세요.</sup>  
-<sup> - ListNode remove(ListNode head, int positionToRemove)를 구현하세요.</sup>  
-<sup> - boolean contains(ListNode head, ListNode nodeTocheck)를 구현하세요.</sup>  
-#### 과제 3. Stack을 구현하세요.  
-<sup> - int 배열을 사용해서 정수를 저장하는 Stack을 구현하세요.</sup>  
-<sup> - void push(int data)를 구현하세요.</sup>  
-<sup> - int pop()을 구현하세요.</sup>  
-#### 과제 4. 앞서 만든 ListNode를 사용해서 Stack을 구현하세요.  
-<sup> - ListNode head를 가지고 있는 ListNodeStack 클래스를 구현하세요.</sup>  
-<sup> - void push(int data)를 구현하세요.</sup>  
-<sup> - int pop()을 구현하세요.</sup>  
-#### (optional) 과제 5. Queue를 구현하세요.   
-<sup> - 배열을 사용해서</sup>  
-<sup> - ListNode를 사용해서</sup>  
+
+### ▶ 이름 붙은 반복문  
+
+- break문은 근접한 단 하나의 반복문만 벗어날 수 있기 때문에,  
+  여러 개의 반복문이 중첩된 경우에는 break문으로 완전히 벗어날 수 없다.  
+  이 때 중첩반복문 앞에 이름을 붙이고 break, continue문에 이름을 지정해줌으로써  
+  하나 이상의 반복문을 벗어나거나 반복을 건너뛸 수 있다.  
+
+
+#### 예제  
+
+```java
+package com.studyhalle;
+
+public class NamedLoopEx {
+    public static void main(String[] args) {
+        Loop1 :for (int i = 2; i < 6; i++) {
+            for (int j = 1; j < 9; j++) {
+                if (j==5)
+                    break;
+                System.out.println(i+" * "+j+" = "+ i*j);
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+#### 실행결과  
+<img src="4_7.JPG" width=60%>  
+<br>
+
+
+#### 예제  
+
+```java
+package com.studyhalle;
+
+public class NamedLoopEx {
+    public static void main(String[] args) {
+        Loop1 :for (int i = 2; i < 6; i++) {
+            for (int j = 1; j < 9; j++) {
+                if (j==5)
+                    break Loop1;
+                System.out.println(i+" * "+j+" = "+ i*j);
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+#### 실행결과  
+<img src="4_8.JPG" width=60%>  
+<br>
+
 
 ---  
+
