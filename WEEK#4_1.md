@@ -50,9 +50,10 @@
   }
 ```
 
-- 비순차적 데이터의 추가, 삭제 시 ArrayList는 다른 데이터를 복사하고 이동해야 하지만,
+- 비순차적 데이터의 추가, 삭제 시 ArrayList는 다른 데이터를 재배치하여 저장공간을 만들어야 하지만,
   LinkedList의 경우 노드의 참조값만 변경하면 되므로, ArrayList에 비해 속도가 빠르다.
-  그러나 데이터의 접근은 인덱스값을 이용하는 ArrayList가 LinkedList보다 빠르다.
+  그러나 데이터의 탐색, 접근 시에는 LinkedList가 순차탐색을 필요로 하기 때문에  
+  인덱스값을 이용하는 ArrayList가 보다 빠르다.  
 
 
 #### Doubly Linked List
@@ -67,6 +68,12 @@
     Object obj;     // 데이터를 저장
   }
 ```
+
+
+#### Doubly circular linked list  
+
+doubly linked list의 첫 번째 요소와 마지막 요소를 서로 연결시킨 것으로,  
+마지막 요소의 다음 요소가 첫 번째 요소가 되고, 첫 번째 요소의 이전 요소가 마지막 요소가 되는 것.  
 
 
 <sup> - 정수를 저장하는 ListNode 클래스를 구현하세요.</sup>  
