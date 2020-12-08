@@ -39,6 +39,35 @@
   
 ### ▶ LinkedList  
 
+- 불연속적으로 존재하는 데이터를 서로 연결한 형태로 구성되어 있다.  
+- LinkedList를 구성하는 각 요소를 노드 node 라고 부르며, element와 의미는 비슷하나 좀 더 연결성이 강조된 표현이다.  
+  이러한 노드들은 자신과 연결된 다음 요소에 대한 참조(주소값)와 데이터로 구성되어 있다.  
+
+```
+  class Node {
+    Node next;    // 다음 요소의 주소를 저장
+    Object obj;   // 데이터를 저장
+  }
+```
+
+- 비순차적 데이터의 추가, 삭제 시 ArrayList는 다른 데이터를 복사하고 이동해야 하지만,
+  LinkedList의 경우 노드의 참조값만 변경하면 되므로, ArrayList에 비해 속도가 빠르다.
+  그러나 데이터의 접근은 인덱스값을 이용하는 ArrayList가 LinkedList보다 빠르다.
+
+
+#### Doubly Linked List
+
+
+이동방향이 단방향이기 때문에 이전요소에 접근이 어려운 LinkedList의 단점을 보완한 것으로  
+다음 요소에 대한 참조 뿐 아니라 이전 요소에 대한 참조도 가능하게 하였다.
+```
+  class Node {
+    Node next;      // 다음 요소의 주소를 저장
+    Node previous;  // 이전 요소의 주소를 저장
+    Object obj;     // 데이터를 저장
+  }
+```
+
 
 <sup> - 정수를 저장하는 ListNode 클래스를 구현하세요.</sup>  
 <sup> - ListNode add(ListNode head, ListNode nodeToAdd, int position)를 구현하세요.</sup>  
