@@ -76,11 +76,83 @@ doubly linked list의 첫 번째 요소와 마지막 요소를 서로 연결시�
 마지막 요소의 다음 요소가 첫 번째 요소가 되고, 첫 번째 요소의 이전 요소가 마지막 요소가 되는 것.  
 
 
-<sup> - 정수를 저장하는 ListNode 클래스를 구현하세요.</sup>  
-<sup> - ListNode add(ListNode head, ListNode nodeToAdd, int position)를 구현하세요.</sup>  
-<sup> - ListNode remove(ListNode head, int positionToRemove)를 구현하세요.</sup>  
-<sup> - boolean contains(ListNode head, ListNode nodeTocheck)를 구현하세요.</sup>  
+### ▶ 구현
 
+- 정수를 저장하는 ListNode 클래스를 구현하세요.  
+- ListNode add(ListNode head, ListNode nodeToAdd, int position)를 구현하세요.  
+- ListNode remove(ListNode head, int positionToRemove)를 구현하세요.  
+- boolean contains(ListNode head, ListNode nodeTocheck)를 구현하세요.  
+
+```java
+package com.studyhalle;
+
+public class ListNode {
+
+    private int data;
+    private ListNode next = null;
+
+    public ListNode(){}
+
+    public ListNode(int input) {
+        this.data = input;
+    }
+
+    public ListNode add(ListNode head, ListNode nodeToAdd, int position){
+
+        if(position == 0) {
+            nodeToAdd.next = head;
+            head = nodeToAdd;
+            return nodeToAdd;
+        }
+
+        for (int i = 0; i < position-1; i++) {
+            head = head.next;
+        }
+
+        ListNode nextNode = head.next;
+        head.next = nodeToAdd;
+        nodeToAdd.next = nextNode;
+
+        return nodeToAdd;
+    } // add
+
+
+    public ListNode remove(ListNode head, int positionToRemove){
+
+        if (head == null) return null;
+
+        if (positionToRemove == 0) {
+            ListNode returnNode = head;
+            head = head.next;
+            return returnNode;
+        }
+
+        for (int i = 0; i < positionToRemove-1; i++) {
+            head = head.next;
+        }
+
+        ListNode nodeToRemove = head.next;
+        head.next = nodeToRemove.next;
+
+        ListNode returnNode = nodeToRemove;
+
+        nodeToRemove = null;
+
+        return returnNode;
+    } // remove
+
+    public boolean contains(ListNode head, ListNode nodeToCheck){
+
+        while(head != null) {
+            if (head == nodeToCheck) return true;
+            head = head.next;
+        }
+
+        return false;
+
+    } // contains
+}
+```
 
 #### 과제 3. Stack을 구현하세요.  
 <sup> - int 배열을 사용해서 정수를 저장하는 Stack을 구현하세요.</sup>  
