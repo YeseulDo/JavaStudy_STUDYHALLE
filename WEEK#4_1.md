@@ -154,14 +154,70 @@ public class ListNode {
 }
 ```
 
-#### 과제 3. Stack을 구현하세요.  
-<sup> - int 배열을 사용해서 정수를 저장하는 Stack을 구현하세요.</sup>  
-<sup> - void push(int data)를 구현하세요.</sup>  
-<sup> - int pop()을 구현하세요.</sup>  
-#### 과제 4. 앞서 만든 ListNode를 사용해서 Stack을 구현하세요.  
-<sup> - ListNode head를 가지고 있는 ListNodeStack 클래스를 구현하세요.</sup>  
-<sup> - void push(int data)를 구현하세요.</sup>  
-<sup> - int pop()을 구현하세요.</sup>  
+## 과제 3. Stack을 구현하세요.  
+
+### Stack  
+
+Stack이란 마지막에 저장한 데이터를 가장 먼저 꺼내는 LIFO (Last In First Out) / 후입선출형의 순차적인 자료구조를 말한다.  
+
+### 구현  
+
+- int 배열을 사용해서 정수를 저장하는 Stack을 구현하세요.  
+- void push(int data)를 구현하세요.  
+- int pop()을 구현하세요.  
+
+```java
+package com.studyhalle;
+
+public class Stack {
+
+    private int top;
+    private int size;
+    private int[] stackArray;
+
+    public Stack(int size) {
+        this.top = -1;
+        this.size = size;
+        this.stackArray = new int[this.size];
+    }
+
+    public void push(int input) {
+        if (top==this.size-1) {
+            System.out.println("Stack is FULL");
+        } else {
+            stackArray[++top] = input;
+        }
+    }
+
+    public int pop() {
+        if(top == -1) {
+            System.out.println("Stack is EMPTY");
+            return 0;
+        } else {
+            int returnInt = stackArray[top];
+            this.top -= 1;
+            return returnInt;
+
+        }
+    }
+
+    public int peek(){
+        if(top == -1) {
+            System.out.println("Stack is EMPTY");
+            return 0;
+        } else {
+            return stackArray[top];
+        }
+    }
+}
+```
+
+
+## 과제 4. 앞서 만든 ListNode를 사용해서 Stack을 구현하세요.  
+- ListNode head를 가지고 있는 ListNodeStack 클래스를 구현하세요.  
+- void push(int data)를 구현하세요.  
+- int pop()을 구현하세요.  
+  
 #### (optional) 과제 5. Queue를 구현하세요.   
 <sup> - 배열을 사용해서</sup>  
 <sup> - ListNode를 사용해서</sup>  
