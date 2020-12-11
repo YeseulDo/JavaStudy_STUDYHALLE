@@ -1,7 +1,10 @@
 # JAVA ONLINE STUDY _ STUDYHALLE #4
 
 #### 과제 0. JUnit 5 학습하세요.  
-<sup> - 인텔리J, 이클립스, VS Code에서 JUnit 5로 테스트 코드 작성하는 방법에 익숙해 질 것.</sup>
+
+<sup> - 인텔리J, 이클립스, VS Code에서 JUnit 5로 테스트 코드 작성하는 방법에 익숙해 질 것.</sup>  
+강좌 수강하며 공부중입니다 :-)
+
 #### 과제 1. live-study 대시 보드를 만드는 코드를 작성하세요.  
 <sup> - 깃헙 이슈 1번부터 18번까지 댓글을 순회하며 댓글을 남긴 사용자를 체크 할 것.</sup>  
 <sup> - 참여율을 계산하세요. 총 18회에 중에 몇 %를 참여했는지 소숫점 두자리가지 보여줄 것.</sup>  
@@ -25,8 +28,6 @@
 컬렉션 프레임웍에는 컬렉션 데이터 그룹을 크게 크게 3가지 타입으로 정의하고 있으며,  
 각 컬렉션을 다루는데 필요한 기능을 가진 3개의 인터페이스를 정의하였다.  
 또한 List와 Set의 공통적인 부분을 다시 뽑아서 새로운 인터페이스 Collection을 추가로 정의하였다.  
-
-// 상속계층도
 
 - __List__ : 순서가 있는 데이터의 집합, 데이터의 중복을 허용한다.  
   구현클래스로는 ArrayList, LinkedList, Stack, Vector 등이 있다.
@@ -86,6 +87,8 @@ doubly linked list의 첫 번째 요소와 마지막 요소를 서로 연결시�
 ```java
 package com.studyhalle;
 
+import java.util.List;
+
 public class ListNode {
 
     private int data;
@@ -108,7 +111,6 @@ public class ListNode {
     }
 
     public ListNode(){}
-
     public ListNode(int input) {
         this.data = input;
     }
@@ -135,17 +137,22 @@ public class ListNode {
 
     public ListNode remove(ListNode head, int positionToRemove){
 
-        if (head == null) return null;
+        if (head == null) {
+            return null;
+        }
 
         if (positionToRemove == 0) {
-            ListNode returnNode = head;
+            ListNode nodeToRemove = head;
             head = head.next;
-            return returnNode;
+            return nodeToRemove;
         }
 
         for (int i = 0; i < positionToRemove-1; i++) {
             head = head.next;
         }
+
+        // 해당 포지션에 값이 없으니까?
+        if (head==null) return null;
 
         ListNode nodeToRemove = head.next;
         head.next = nodeToRemove.next;
@@ -158,16 +165,97 @@ public class ListNode {
     } // remove
 
     public boolean contains(ListNode head, ListNode nodeToCheck){
-        
+
         while(head != null) {
             if (head == nodeToCheck) return true;
             head = head.next;
         }
-        
+
         return false;
     } // contains
+
+    public String printList(){
+        ListNode node = this;
+        StringBuffer output = new StringBuffer();
+        output.append("[");
+        while(node.next != null) {
+            output = output.append(node.data);
+            output = output.append("-");
+            node = node.next;
+        }
+        output.append(node.data);
+        output.append("]");
+        return output.toString();
+    }
+
+    public String toString() {
+        ListNode node = this;
+        return String.valueOf(this.getData());
+    }
 }
 ```
+
+- 테스트  
+```java
+package com.studyhalle;
+
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ListNodeTest {
+    ListNode node1 = new ListNode(1);
+
+    @Test
+    void addTest(){
+        node1.add(node1, new ListNode(2), 1);
+        node1.add(node1, new ListNode(3), 2);
+        node1.add(node1, new ListNode(4), 3);
+        node1.add(node1, new ListNode(5), 4);
+
+        String output = node1.printList();
+        assertEquals("[1-2-3-4-5]", output);
+        System.out.println(output);
+    }
+
+    @Test
+    void removeTest(){
+        node1.add(node1, new ListNode(2), 1);
+        node1.add(node1, new ListNode(3), 2);
+        node1.add(node1, new ListNode(4), 3);
+        node1.add(node1, new ListNode(5), 4);
+
+        node1.remove(node1, 2);
+        assertEquals("[1-2-4-5]", node1.printList());
+
+        assertNull(node1.remove(node1, 5));
+
+        /*
+        왜안되는지모르게따..?
+        node1.remove(node1, 0);
+        assertEquals("[2-4-5]", node1.printList());
+        */
+
+
+    }
+
+    @Test
+    void containTest(){
+        node1.add(node1, new ListNode(2), 1);
+        node1.add(node1, new ListNode(3), 2);
+        node1.add(node1, new ListNode(4), 3);
+        ListNode newNode = new ListNode(5);
+        node1.add(node1, newNode, 4);
+        ListNode newNode1 = new ListNode(4);
+        assertEquals(true ,node1.contains(node1, newNode));
+        assertEquals(false, node1.contains(node1, newNode1));
+
+    }
+}
+```
+
 
 ## 과제 3. Stack을 구현하세요.  
 
