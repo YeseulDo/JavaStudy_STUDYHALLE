@@ -91,6 +91,22 @@ public class ListNode {
     private int data;
     private ListNode next = null;
 
+    public int getData() {
+        return data;
+    }
+
+    public void setData(int data) {
+        this.data = data;
+    }
+
+    public ListNode getNext() {
+        return next;
+    }
+
+    public void setNext(ListNode next) {
+        this.next = next;
+    }
+
     public ListNode(){}
 
     public ListNode(int input) {
@@ -142,14 +158,13 @@ public class ListNode {
     } // remove
 
     public boolean contains(ListNode head, ListNode nodeToCheck){
-
+        
         while(head != null) {
             if (head == nodeToCheck) return true;
             head = head.next;
         }
-
+        
         return false;
-
     } // contains
 }
 ```
@@ -214,9 +229,33 @@ public class Stack {
 
 
 ## 과제 4. 앞서 만든 ListNode를 사용해서 Stack을 구현하세요.  
+
 - ListNode head를 가지고 있는 ListNodeStack 클래스를 구현하세요.  
 - void push(int data)를 구현하세요.  
 - int pop()을 구현하세요.  
+
+
+```java
+package com.studyhalle;
+
+public class ListNodeStack {
+    ListNode head;
+
+    public ListNodeStack() {
+        head = new ListNode();
+    }
+
+    public void push(int data) {
+        ListNode node = new ListNode(data);
+        head.add(head, node, 0);
+    }
+
+    public int pop() {
+        if (head==null) return 0;
+        return head.remove(head, 0).getData();
+    }
+}
+```
   
 #### (optional) 과제 5. Queue를 구현하세요.   
 <sup> - 배열을 사용해서</sup>  
