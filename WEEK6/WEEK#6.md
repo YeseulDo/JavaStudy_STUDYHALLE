@@ -241,6 +241,8 @@ class Card {
 일반적으로 접근제어자는 클래스의 접근제어자와 같지만, 다르게 지정할 수도 있다. 생성자의 접근제어자가 `private`인 경우, 외부에서 생성자에 접근할 수 없으므로 클래스 내부에서 밖에 인스턴스를 생성할 수 없다. 때문에 생성자가 `private`인 클래스는 다른 클래스의 조상이 될 수 없다. 이러한 경우 클래스 앞에 `final`을 추가하여 상속할 수 없는 클래스라는 것을 알리는 것이 좋다.  
 Math 클래스 같은 경우, 몇 개의 상수와 `static` 메서드만으로 구성되어 있기 때문에 인스턴스를 생성할 필요가 없으므로 외부의 불필요한 접근을 막기 위해 생성자의 접근제어자가 `private`으로 설정되어있다.  
 
+<img src="6_1.JPG" width=90%>  
+
 ```java
   public final class Math { // 생성자가 private으로 정의되어 있기 때문에, 클래스에 final 을 사용하고 있다.
     private Math() {}
@@ -266,11 +268,139 @@ String, System 등의 클래스도 이 패키지에 속해있으며, Object 클�
 | 메서드 | 설명 |
 |-----|-------|
 | protected Object clone() | 객체 자신의 복사본을 반환한다. |
-| public boolean equals(Object obj) | 객체 자신과 obj가 같은 객체인지 알려준다. |
+| public boolean equals(Object obj) <sup>1)</sup> | 객체 자신과 obj가 같은 객체인지 알려준다. |
 | protected void finalize() | 객체가 소멸될 때 가비지컬렉터에 의해 자동으로 호출된다. <br> 이 타이밍에 수행될 코드가 있을 경우 오버라이딩해서 사용한다. |
-| public Class getClass() | 객체 자신의 클래스 정보를 담고 있는 Class 인스턴스를 반환한다. |
-| public int hashCode() | 객체 자신의 해시코드를 반환한다. |
-| public String toString() | 객체 자신의 정보를 문자열로 반환한다. |
+| public Class getClass() <sup>2)</sup> | 객체 자신의 클래스 정보를 담고 있는 Class 인스턴스를 반환한다. |
+| public int hashCode() <sup>3)</sup> | 객체 자신의 해시코드를 반환한다. |
+| public String toString() <sup>4)</sup> | 객체 자신의 정보를 문자열로 반환한다. |
 | public void notify() | 객체 자신을 사용하려고 기다리는 쓰레드를 하나만 깨운다. |
 | public void notifyAll() | 객체 자신을 사용하려고 기다리는 모든 쓰레드를 깨운다. |
-| public void wait() <br> public void wait(long timeout) <br> public void wait(long timeout, int nanos) | 다른 쓰레드가 notify나 notifyAll을 호출할 때까지 <br> 현재 쓰레드를 무한히/지정된시간(timeout, nanos)동안 기다리게 한다. |
+| public void wait() <br> public void wait(long timeout) <br> public void wait(long timeout, int nanos) | 다른 쓰레드가 notify나 notifyAll을 호출할 때까지 <br> 현재 쓰레드를 무한히/지정된시간(timeout, nanos)동안 기다리게 한다. |  
+
+
+#### 1) public boolean equals(Object obj)  
+
+<img src="6_2.JPG" width=90%>  
+
+매개변수로 객체의 참조변수를 받아서 비교하여 그 결과를 boolean값으로 알려주는 역할을 한다.  
+
+```java
+package com.studyhalle;
+
+public class EqualsEx {
+
+    public static void main(String[] args) {
+        Value v1 = new Value(10);
+        Value v2 = new Value(10);
+        
+        if (v1.equals(v2)) {
+            System.out.println("case 1. equal:)");
+        } else {
+            System.out.println("case 1. different;(");
+        }
+        
+        v2 = v1;
+
+        if (v1.equals(v2)) {
+            System.out.println("case 2. equal:)");
+        } else {
+            System.out.println("case 2. different;(");
+        }
+        
+    }
+    
+}
+class Value {
+    int value;
+    
+    Value(int value){
+        this.value = value;
+    }
+}
+```
+<img src="6_4.JPG" width=90%>  
+
+객체의 같고 다름을 참조변수의 값으로 판단하므로 case 1 에서는 false이지만,   v2 = v1으로 v2에도 v1의 주소값이 저장된 후에 비교한 case 2의 결과는 true이다.  
+
+
+때문에 `equals()` 로 객체 자체가 아닌 멤버변수 등을 비교하고 싶을 경우, 원하는 멤버를 비교할 수 있도록 오버라이딩 하여 사용할 수 있다. String, Date, File 등의 클래스의 `equals()`도 주소값이 아닌 내용을 비교하도록 오버라이딩 되어 있다.  
+
+<sup>- String 클래스의 equals()</sup>
+<img src="6_3.JPG" width=90%>  
+
+
+#### 2) public Class getClass()  
+
+자신이 속한 클래스의 Class 객체를 반환한다. 
+
+__Class 클래스__
+
+<img src="6_5.JPG" width=90%>  
+
+Class객체는 클래스 당 1개만 존재하는, 해당 클래스의 모든 정보를 담고 있는 객체이며, 클래스 파일이 Class loader에 의해 메모리에 올라갈 때 자동으로 생성된다. 
+클래스파일을 읽어서 Class클래스에 정의된 형식으로 변환하는 것으로, 클래스파일을 사용하기 편한 형태로 저장해놓은 것이라고 생각하면 쉽다.  
+<sub>※ Class loader : 실행 시 필요한 클래스를 동적으로 메모리에 로드. 기존에 생성된 클래스 객체가 메모리에 존재하는지 확인하고, 있을 경우 객체의 참조를 반환, 없을 경우 classpath에 지정된 경로를 따라 클래스 파일을 찾는다. 찾지 못할 경우 ClassNotFoundException이 발생하고, 찾으면 해당 클래스 파일을 읽어 Class객체로 변환한다.</sub>
+
+```java
+   Class cls1 = new 생성자.getClass();       // 생성된 객체로부터 얻는 방법
+   Class cls2 = 클래스명.class;               // 클래스 리터럴(*.class) 로부터 얻는 방법
+   Class cls3 = Class.forName("클래스명");    
+   // 클래스명으로 얻는 방법 - 특정 클래스 파일, 예를들어 데이터베이스 드라이버 등을 메모리에 올릴 때 주로 사용한다.
+```
+
+__Reflection__
+
+#### 3) public int hashCode()  
+
+해싱 hashing 기법에 사용되는 hash function을 구현 한 것으로, 찾고자 하는 값을 입력하면 그 값이 저장된 위치를 알려주는 hash code를 반환한다. 
+해시코드가 같은 두 객체는 존재할 수 있지만, Object 클래스에 정의된 `hashCode()` 메서드는 객체의 주소값을 이용해 해시코드를 만들기 때문에 서로 다른 두 객체는 결코 같은 해시코드를 가질 수 없다. 
+`equals()` 를 오버라이딩하여 클래스의 인스턴스 변수의 값으로 객체의 같고 다름을 판단해야 하는 경우라면 `hashCode()`도 오버라이딩 하는 것이 좋다. 같은 객체라면 해시코드도 같아야 하기 때문이다. 해싱기법을 사용하는 HashMap이나 HashSet과 같은 클래스에 저장할 객체라면 반드시 `hashCode()`를 오버라이딩 해야 한다.  
+
+
+#### 4) public String toString()  
+
+인스턴스에 대한 정보를 String으로 제공할 목적으로 정의 된 것이다.   
+
+<img src="6_6.JPG" width=90%>  
+
+`Object` 클래스에 정의된 `toString()`은 클래스이름에 16진수의 해시코드를 더한 값을 리턴한다. 그렇기 때문에, 일반적으로 인스턴스나 클래스에 대한 정보 또는 인스턴스 변수들의 값을 문자열로 변환하여 반환하도록 오버라이딩하여 사용하는 것이 일반적이다.  
+
+```java
+package com.studyhalle;
+
+import java.util.Date;
+
+public class ToStringEx {
+    public static void main(String[] args) {
+        String str = new String("HIHI");
+        Date today = new Date();
+        Card c1 = new Card();
+
+        System.out.println(str);
+        System.out.println(str.toString());
+        System.out.println(today);
+        System.out.println(today.toString());
+        System.out.println(c1);
+        System.out.println(c1.toString());
+    }
+}
+
+class Card {
+    String kind;
+    int number;
+
+    Card() {
+        this("SPADE", 1);
+    }
+
+    Card (String kind, int number) {
+        this.kind = kind;
+        this.number = number;
+    }
+}
+```
+<img src="6_7.JPG" width=90%>  
+String클래스의 경우 String 인스턴스가 갖고 있는 문자열을 반환하도록, Date클래스의 경우 Date인스턴스가 갖고 있는 날짜와 시간을 문자열로 반환하도록 오버라이딩되어 있다.  
+
+### 계속!
+
