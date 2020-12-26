@@ -121,7 +121,10 @@ println() 메서드 호출 시, 매개변수로 넘겨주는 값의 타입을 �
 
 ## 다이나믹 메소드 디스패치 (Dynamic Method Dispatch)  
 
+오버라이드 된 메서드가 참조에 의해 호출될 때 참조하는 객체 유형에 따라 실행할 메서드 버전을 판별하는데, 이러한 판별이 컴파일타임이 아닌 런타임에 이루어지는 것.
 
+
+https://defacto-standard.tistory.com/413
 
 
 ## 추상 클래스 (abstract class)  
@@ -348,7 +351,13 @@ Class객체는 클래스 당 1개만 존재하는, 해당 클래스의 모든 �
    // 클래스명으로 얻는 방법 - 특정 클래스 파일, 예를들어 데이터베이스 드라이버 등을 메모리에 올릴 때 주로 사용한다.
 ```
 
-__Reflection__
+
+__JAVA Reflection__
+
+구체적인 클래스타입을 알지 못해도 해당 클래스의 메서드, 타입, 변수들에 접근할 수 있도록 해 주는 자바 API  
+https://medium.com/msolo021015/%EC%9E%90%EB%B0%94-reflection%EC%9D%B4%EB%9E%80-ee71caf7eec5  
+
+
 
 #### 3) public int hashCode()  
 
@@ -402,5 +411,4 @@ class Card {
 <img src="6_7.JPG" width=90%>  
 String클래스의 경우 String 인스턴스가 갖고 있는 문자열을 반환하도록, Date클래스의 경우 Date인스턴스가 갖고 있는 날짜와 시간을 문자열로 반환하도록 오버라이딩되어 있다.  
 
-### 계속!
 
