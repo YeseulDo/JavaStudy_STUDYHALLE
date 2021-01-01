@@ -80,14 +80,14 @@ import static java.lang.System.out;   // System.out을 out으로 참조 가능.
 기본적으로 패키지에 포함되지 않은 소스 파일을 컴파일할 때 `classpath` 를 설정하게 되는데, 이 `classpath` 를 지정할 수 있는 방법으로 __환경 변수 CLASSPATH__ 를 설정하는 방법과, __-classpath__ 옵션을 사용하는 두 가지 방법이 있다.  
 
 
-### CLASSPATH 환경변수  
+### 1. CLASSPATH 환경변수  
 환경변수는 운영체제에 지정하는 변수로, 자바는 `CLASSPATH` 라는 환경변수의 값을 참고해서 동작한다. 
 이 값을 미리 설정하면 실행할 때마다 -classpath 옵션을 사용하지 않아도 된다.
 
 <img src="7_1.JPG" width=60%>  
 
 
-### -classpath 옵션  
+### 2. -classpath 옵션  
 컴파일, 혹은 실행 시 `-classpath` (단축어 `-cp`)옵션으로 직접 디렉토리를 지정할 수 있다.  
 
 ```
@@ -99,9 +99,8 @@ java -classpath ".;..;directory" class
 `..` 상위경로
 
 
-__EX__
 
-1) 아래 내용과 같은 소스코드 ClasspathTest.java를 작성 후 컴파일 및 실행
+#### EX 1) 아래 내용과 같은 소스코드 ClasspathTest.java를 작성 후 컴파일 및 실행
 ```java
 class Cpt {
     public void print(){
@@ -118,11 +117,14 @@ class ClasspathTest {
 ```
 <img src="7_2.jpg">  
 
-2) Cpt.java 파일을 lib 아래로 이동 후 실행 - ClassNotFoundException 발생
+
+#### EX 2) Cpt.java 파일을 lib 아래로 이동 후 실행 - ClassNotFoundException 발생
 <img src="7_3.jpg">  
 
-3) -classpath 옵션으로 현재디렉토리 및 하위 lib 디렉토리 설정 후 실행
+
+#### EX 3) -classpath 옵션으로 현재디렉토리 및 하위 lib 디렉토리 설정 후 실행
 <img src="7_4.jpg">  
+
 
 ## 접근제어자 access modifier  
 
