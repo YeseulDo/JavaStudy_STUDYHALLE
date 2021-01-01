@@ -124,7 +124,7 @@ class ClasspathTest {
 이 값을 미리 설정하면 실행할 때마다 -classpath 옵션을 사용하지 않아도 된다.
 
 #### EX 4) CLASSPATH 설정 후 실행
-<img src="7_1.JPG" width=60%>  
+<img src="7_1.jpg" width=60%>  
 <img src="7_5.jpg">  
 <br>
 
