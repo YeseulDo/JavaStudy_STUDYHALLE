@@ -77,17 +77,10 @@ import static java.lang.System.out;   // System.out을 out으로 참조 가능.
 컴파일러나 JVM등이 클래스파일의 위치를 찾는데 기준이 되는 파일 경로를 의미한다.   
 자바프로그램 실행 시, 컴파일러에 의해 소스코드 `.java` 는 바이트코드 `.class` 로 변환된다. 이 `.class` 파일을 찾는데 `classpath` 에 지정된 경로가 사용된다. `classpath` 는 클래스파일이 포함된 디렉토리와 파일을 콜론으로 구분한 목록으로, 지정된 경로를 모두 검색하여 클래스파일을 찾는다. (첫 번째로 찾은 파일을 사용)  
 
-기본적으로 패키지에 포함되지 않은 소스 파일을 컴파일할 때 `classpath` 를 설정하게 되는데, 이 `classpath` 를 지정할 수 있는 방법으로 __환경 변수 CLASSPATH__ 를 설정하는 방법과, __-classpath__ 옵션을 사용하는 두 가지 방법이 있다.  
+기본적으로 패키지에 포함되지 않은 소스 파일을 컴파일할 때 `classpath` 를 설정하게 되는데, 이 `classpath` 를 지정할 수 있는 방법으로, __-classpath__ 옵션을 사용하는 방법과 __환경 변수 CLASSPATH__ 를 설정하는 두 가지의 방법이 있다.  
 
 
-### 1. CLASSPATH 환경변수  
-환경변수는 운영체제에 지정하는 변수로, 자바는 `CLASSPATH` 라는 환경변수의 값을 참고해서 동작한다. 
-이 값을 미리 설정하면 실행할 때마다 -classpath 옵션을 사용하지 않아도 된다.
-
-<img src="7_1.JPG" width=60%>  
-
-
-### 2. -classpath 옵션  
+### 1. -classpath 옵션  
 컴파일, 혹은 실행 시 `-classpath` (단축어 `-cp`)옵션으로 직접 디렉토리를 지정할 수 있다.  
 
 ```
@@ -126,6 +119,16 @@ class ClasspathTest {
 <img src="7_4.jpg">  
 
 
+### 2. CLASSPATH 환경변수  
+환경변수는 운영체제에 지정하는 변수로, 자바는 `CLASSPATH` 라는 환경변수의 값을 참고해서 동작한다. 
+이 값을 미리 설정하면 실행할 때마다 -classpath 옵션을 사용하지 않아도 된다.
+
+#### EX 4) CLASSPATH 설정 후 실행
+<img src="7_1.JPG" width=60%>  
+<img src="7_5.jpg">  
+<br>
+
+
 ## 접근제어자 access modifier  
 
 접근제어자는 멤버, 클래스에 사용되어 해당하는 멤버 또는 클래스를 외부에서 접근하지 못하도록 제한하는 역할을 한다.  
@@ -148,7 +151,7 @@ __● 캡슐화 encapsulation__
 클래스 작성 시, 멤버변수를 `private`나 `protected`로 제한하고, 멤버변수의 값을 읽고 변경할 수 있는 `public` 메서드(getter, setter)를 제공하여 간접적으로 멤버변수의 값을 다룰 수 있도록 하는 방법이 바람직하다.
 
 
-### 생성자의 접근제어자  
+__● 생성자의 접근제어자__  
 
 생성자에 접근제어자를 사용하여 인스턴스의 생성을 제한할 수도 있다.  
 일반적으로 접근제어자는 클래스의 접근제어자와 같지만, 다르게 지정할 수도 있다. 생성자의 접근제어자가 `private`인 경우, 외부에서 생성자에 접근할 수 없으므로 클래스 내부에서 밖에 인스턴스를 생성할 수 없다. 때문에 생성자가 `private`인 클래스는 다른 클래스의 조상이 될 수 없다. 이러한 경우 클래스 앞에 `final`을 추가하여 상속할 수 없는 클래스라는 것을 알리는 것이 좋다.  
@@ -164,11 +167,11 @@ Math 클래스 같은 경우, 몇 개의 상수와 `static` 메서드만으로 �
 ```
 
 생성자가 `private`인 클래스의 인스턴스를 사용할 수 있게 하기 위해서는 대신 인스턴스를 생성해서 반환해 주는 `public` 메서드를 제공하는 방법이 있다. 다만 이 메서드는 `public static` 메서드이어야 한다.  
-
+<br>
 
 
 ---  
 #### REFERENCE  
 남궁성, 「자바의 정석」, 도우출판, 2016  
-https://effectivesquid.tistory.com/entry/%EC%9E%90%EB%B0%94-%ED%81%B4%EB%9E%98%EC%8A%A4%ED%8C%A8%EC%8A%A4classpath%EB%9E%80
+https://effectivesquid.tistory.com/entry/%EC%9E%90%EB%B0%94-%ED%81%B4%EB%9E%98%EC%8A%A4%ED%8C%A8%EC%8A%A4classpath%EB%9E%80  
 https://opentutorials.org/course/1223/5527
