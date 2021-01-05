@@ -7,31 +7,30 @@ __목표 : 자바의 인터페이스에 대해 학습하기.__
 ## 인터페이스 interface  
 
 `인터페이스 interface` 는 오직 추상메서드와 상수만을 멤버로 가질 수 있는 추상클래스라고 할 수 있다. 추상클래스는 추상메서드 뿐 아니라 일반메서드 또한 멤버로 가질 수 있으나, 인터페이스는 추상메서드와 상수 이외에는 어떠한 요소도 멤버로 허용하지 않는다.  
-또한, 추상클래스를 상속하는 객체가 추상클래스에 정의된 추상메서드를 구현해야 하는 것 처럼, 인터페이스를 구현하는 객체는 반드시 해당 인터페이스에 정의된 추상메서드들을 구현해야 한다. 
+추상클래스를 상속하는 객체가 추상클래스에 정의된 추상메서드를 구현해야 하는 것 처럼, __인터페이스를 구현하는 객체는 해당 인터페이스에 정의된 추상메서드들을 반드시 구현해야 한다.__   
 
 __인터페이스 사용시의 장점__  
-- 개발시간을 단축시킬 수 있다.
+1) 개발시간을 단축시킬 수 있다.  
     인터페이스가 작성되면, 메서드의 선언부가 작성되는 것이므로 메서드를 호출하는 쪽은 인터페이스를 구현하는 클래스가 작성될 때까지 기다리지 않고 동시에 개발을 진행할 수 있다.    
-- 표준화가 가능하다.  
+2) 표준화가 가능하다.  
     프로젝트에 사용되는 기본적인 틀을 인터페이스로 작성하고, 그 인터페이스를 구현하는 방식으로 프로그램을 작성함으로써 보다 일관적이고 정형화 된 개발이 가능하다.  
-- 서로 관계없는 클래스들에게 관계를 맺어줄 수 있다.    
+3) 서로 관계없는 클래스들에게 관계를 맺어줄 수 있다.    
     하나의 인터페이스를 공통적으로 구현하게 함으로써 관계를 맺을 수 있다.  
-- 독립적인 프로그래밍이 가능하다.  
+4) 독립적인 프로그래밍이 가능하다.  
     클래스와 클래스간의 직접적 관계를 인터페이스를 이용한 간접적 관계로 변경함으로써 한 클래스의 변경이 다른클래스에 영향을 미치지 않는 독립적인 프로그래밍이 가능하다.  
-
+    
+    
 ## 인터페이스 정의  
   
-```java
+```
 interface 인터페이스명 {
     public static final 타입 상수명 = 값;
     public abstract 메서드명(매개변수목록);
 }
 ```
 
-클래스 정의와 틀은 같으나 `class` 대신 `interface` 키워드를 사용한다. 접근제어자로 `public`이나 `default`를 사용할 수 있다.
-모든 멤버변수는 public static final, 메서드는 public abstract 이어야 하며 생략가능하다. 생략된 제어자는 컴파일 시 컴파일러가 자동으로 추가한다.
-
-※ 인터페이스의 이름은 able로 끝나는 경우가 많은데, 어떠한 기능이나 행위를 하는데 필요한 메서드를 제공한다는 의미를 강조하기 위해서이다. (반드시 그런 것은 아님!)
+클래스 정의와 틀은 같으나 `class` 대신 `interface` 키워드를 사용한다. 접근제어자로 `public`이나 `default`를 사용할 수 있다.  
+모든 멤버변수는 `public static final`, 메서드는 `public abstract` 이어야 하며 생략가능하다. 생략된 제어자는 컴파일 시 컴파일러가 자동으로 추가한다.
 
 ```java
 interface Food {
@@ -102,7 +101,7 @@ class 클래스명 implements 인터페이스명 {
 class Rice {
     String origin;
     void riceOrigin() {
-        System.out.println(origin);
+        System.out.println("이 요리에 사용된 쌀의 원산지는 "+origin+" 입니다.");
     }
 }
 
@@ -146,15 +145,22 @@ abstract class Pasta implements Food{
   
 
 ```java  
-
 package com.studyhalle;
 
 public class InterfaceFoodEx {
-    
+
     public static void main(String[] args) {
         Food omurice = new Omurice();
-        //이 때, Food의 참조변수로는 인터페이스 Food에 정의된 멤버들만 호출가능하다.  
         System.out.println(new InterfaceFoodEx().checkFoodType(omurice)+"먹자아");
+        //이 때, Food의 참조변수로는 인터페이스 Food에 정의된 멤버들만 호출가능하다.  
+
+        System.out.println("--------------------");
+
+        Bibimbap bibimbap = new Bibimbap();
+        bibimbap.eat();        
+        bibimbap.origin = "KOREA";  // Bibimbap 클래스는 Rice 클래스를 상속받고 있으므로 
+        bibimbap.riceOrigin();      // Rice 클래스의 멤버도 사용가능하다.
+        
     }
 
     String checkFoodType(Food food) {
@@ -169,6 +175,9 @@ public class InterfaceFoodEx {
 
 }
 ```
+실행결과  
+<img src="8_1.jpg" width=80%>  
+
 
 
 ## 인터페이스의 기본 메소드 (Default Method), 자바 8  
