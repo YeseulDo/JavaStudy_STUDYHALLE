@@ -236,7 +236,7 @@ interface Food {
 }
 ```
 
-```Java
+```Java  
     public static void main(String[] args) {
 
         Food ss = new Sushi();
@@ -275,5 +275,13 @@ interface Food {
         Random rd = new Random();
         return machines[rd.nextInt(4)];
     }
+}
 ```
+<br>
+ 
+ 
+ ---  
+ #### REFERENCE  
+ 남궁성, 「자바의 정석」, 도우출판, 2016  
+
 
