@@ -34,7 +34,7 @@ interface 인터페이스명 {
 
 ```java
 interface Food {
-    void foodName();
+    String foodName();
     void eat();
     void cook();
 }
@@ -54,16 +54,16 @@ interface AsianFood extends KoreanFood, JapaneseFood { }
 AsianFood를 구현하는 클래스가 있다면 Food, KoreanFood, JapaneseFood의 모든 메서드를 오버라이딩해야 한다.  
 
 ```java
-class Omurice implements AsianFood {
+class Omurice implements asianFood {
 
     @Override
-    public void foodName() {
-        System.out.println("오무라이스");
+    public String foodName() {
+        return "오무라이스";
     }
 
     @Override
     public void eat() {
-        System.out.println("오무라이스 냠냠");
+        System.out.println("오무라이스냠");
     }
 
     @Override
@@ -73,14 +73,13 @@ class Omurice implements AsianFood {
 
     @Override
     public void returnKimchi() {
-        System.out.println("김치랑 오무라이스랑");
+        System.out.println("오무김치");
     }
 
     @Override
     public void returnMiso() {
-        System.out.println("미소시루랑 오무라이스랑");
+        System.out.println("오무미소");
     }
-
 }
 ```
 
@@ -108,13 +107,13 @@ class Rice {
 class Bibimbap extends Rice implements Food {
 
     @Override
-    public void foodName() {
-        System.out.println("비빔밥");
+    public String foodName() {
+        return "비빔밥";
     }
 
     @Override
     public void eat() {
-        System.out.println("비빔밥 냠냠");
+        System.out.println("비빔밥냠");
     }
 
     @Override
@@ -130,8 +129,8 @@ class Bibimbap extends Rice implements Food {
 ```java
 abstract class Pasta implements Food{
     @Override
-    public void foodName() {
-        System.out.println("파스타");
+    public String foodName() {
+        return "파스타";
     }
 }
 ```
@@ -150,17 +149,15 @@ package com.studyhalle;
 public class InterfaceFoodEx {
 
     public static void main(String[] args) {
-        Food omurice = new Omurice();
-        System.out.println(new InterfaceFoodEx().checkFoodType(omurice)+"먹자아");
-        //이 때, Food의 참조변수로는 인터페이스 Food에 정의된 멤버들만 호출가능하다.  
 
-        System.out.println("--------------------");
+        Food omr = new Omurice();
+        System.out.println(new InterfaceFoodEx().checkFoodType(omr)+"먹자아");
 
-        Bibimbap bibimbap = new Bibimbap();
-        bibimbap.eat();        
-        bibimbap.origin = "KOREA";  // Bibimbap 클래스는 Rice 클래스를 상속받고 있으므로 
-        bibimbap.riceOrigin();      // Rice 클래스의 멤버도 사용가능하다.
-        
+        Bibimbap bbb = new Bibimbap();
+        bbb.eat();
+        bbb.origin = "KOREA";  // Bibimbap 클래스는 Rice 클래스를 상속받고 있으므로
+        bbb.riceOrigin();      // Rice 클래스의 멤버도 사용가능하다.
+
     }
 
     String checkFoodType(Food food) {
@@ -191,6 +188,27 @@ public class InterfaceFoodEx {
 접근제어자는 `public`이며 생략가능하다.  
 또한, 다른 추상메서드와 마찬가지로 구현된 클래스에서 오버라이딩 할 수 있다.  
 
+
+```java
+interface Food {
+    String foodName();
+    void eat();
+    void cook();
+
+    default void heat() {
+        System.out.println("use a microwave:)");
+    };
+}
+
+class Sushi implements JapaneseFood {
+
+    ...
+
+    @Override
+    public void heat() { System.out.println("스시는 데우지말고 드세오 :("); }
+}
+```
+
 ## 인터페이스의 static 메소드, 자바 8  
 
 `static method` 는 인스턴스와 관계가 없는 독립적인 메서드로 인터페이스에 추가하지 못할 이유가 없었으나,  
@@ -202,7 +220,60 @@ public class InterfaceFoodEx {
 
 인터페이스의 static 메서드 역시 접근제어자는 `public` 이며 생략가능하지만, 구현클래스에서의 오버라이딩은 불가능하다.  
 
+```java
+interface Food {
+    void foodName();
+    void eat();
+    void cook();
+
+    default void heat() {
+        System.out.println("use a microwave:)");
+    };
+    
+     static void alert() {
+        System.out.println("음식을 남기지 맙시다!");
+    }
+}
+```
+
+```Java
+    public static void main(String[] args) {
+
+        Food ss = new Sushi();
+        ss.heat();      // default method 오버라이딩
+        
+        Bibimbap bbb = new Bibimbap();
+        bbb.heat();     // default method 오버라이딩 X
+        
+        Food.alert();   // Food 인스턴스타입으로 호출한 static method
+
+    }
+```
+실행결과  
+<img src="8_2.jpg" width=80%> 
 
 ## 인터페이스의 private 메소드, 자바 9  
 
 인터페이스의 내부메서드 (default, static method) 에서 사용하기 위한 메서드로, 구현클래스에서는 재정의하거나 사용할 수 없다.  
+
+```Java
+interface Food {
+    String foodName();
+    void eat();
+    void cook();
+
+    default void heat() {
+        System.out.println("use "+returnMachine()+":)");
+    }
+
+    static void alert() {
+        System.out.println("음식을 남기지 맙시다!");
+    }
+
+    private String returnMachine() {
+        String[] machines = {"microwave", "oven", "gas stove", "induction range"};
+        Random rd = new Random();
+        return machines[rd.nextInt(4)];
+    }
+```
+
