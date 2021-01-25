@@ -8,8 +8,7 @@ __목표 : 자바의 예외 처리에 대해 학습하기.__
 
 ### 프로그램 오류  
 
-프로그램이 실행 중 어떤 원인에 의해 오작동하거나 비정상종료되는 경우, 이러한 결과를 초래하는 원인을 프로그램 에러, 오류라고 한다.  
-발생시점에 따라 compile-time error 와 runtime error로 나눌 수 있다.  
+프로그램이 실행 중 어떤 원인에 의해 오작동 비정상종료되는 경우, 이러한 결과를 초래하는 원인을 프로그램 에러, 오류라고 한다. 발생시점에 따라 compile-time error 와 runtime error로 나눌 수 있다.  
 
 ```
 compime-time error : 컴파일 시 발생하는 에러  
@@ -65,6 +64,100 @@ RuntimeException 및 서브클래스에 속하는 클래스들은 주로 프로�
 
 ## 자바에서 예외 처리 방법 (try, catch, throw, throws, finally)  
 
+`예외처리 exception handling` 란 프로그램 실행 시 발생할 수 있는 예기치 못한 예외의 발생에 대비한 코드를 작성하는것으로,  
+예외처리의 목적은 예외의 발생으로 인한 실행중인 프로그램의 갑작스러운 비정상종료를 막고, 정상적인 실행상태를 유지할 수 있도록 하는 것이다. 발생된 예외를 처리하지 못하면 프로그램은 비정상종료되며, 처리되지 못한 예외는 JVM의 예외처리기(UncaughtExceptionHandler)가 받아 예외의 원인을 화면에 출력한다.  
+
+
+### try-catch  
+
+예외처리를 위해 `try-catch` 문을 사용한다.  
+하나의 `try` 블럭 다음에는 여러 종류의 예외를 처리할 수 있도록 하나 이상의 `catch` 블럭이 올 수 있다.  
+
+```Java
+try {
+  // 예외가 발생할 가능성이 있는 코드
+} catch (Exception1 e1) { // 처리하고자 하는 예외와 같은 타입의 참조변수를 선언한다.
+  // Exception1이 발생했을 경우 이를 처리하기 위한 코드를 작성한다.
+} catch (Exception2 e2) { 
+  // Exception2가 발생했을 경우 이를 처리하기 위한 코드를 작성한다.
+} ...
+```
+
+
+* 흐름
+
+`try` 블럭 내에서 예외가 발생하면, 발생한 예외에 해당하는 클래스의 인스턴스가 만들어진다.  
+생성된 예외클래스의 인스턴스와 `catch` 블럭의 괄호 () 에 선언된 참조변수가 `instanceof` 연산자를 이용해 비교되는데,  
+여러 개의 `catch` 블럭이 작성된 경우, 가장 위에 작성된 `catch` 블럭부터 순서대로 연산이 이루어진다.  
+`instanceof` 연산의 결과가 true 인-발생한 예외의 종류와 일치하는- `catch` 블럭을 찾으면, 내부에 작성된 문장이 수행된다.  
+
+```Java
+
+public class ExceptionEx {
+    public static void main(String[] args) {
+
+        int number = 100;
+        int result = 0;
+
+        for (int i = 0; i < 10; i++) {
+            try {
+                result = number / (int) (Math.random() * 10);   // ArithmeticException의 발생가능성이 있는 코드
+                System.out.println(result);
+                
+            } catch (ArithmeticException e) { // ArithmeticException 이 발생한 경우 0을 출력
+                System.out.println(0); 
+                
+            } catch (Exception e) { // ArithmeticException 이외의 예외가 발생한 경우 해당 예외의 정보와 메시지 등을 출력
+                e.printStackTrace();
+                System.out.println("error message : "+e.getMessage());
+            }
+
+        }
+    }
+}
+
+```
+
+작성된 `catch` 블럭 중 발생한 예외타입의 종류와 일치하는 블럭이 없으면 예외는 처리되지 않는다.  
+`try-catch` 문의 마지막에 `Exception` 클래스 타입의 참조변수를 선언한 `catch` 블럭을 작성하면,  
+어떤 종류의 예외가 발생하더라도 이 `catch` 블럭에 의해 처리되도록 할 수 있다.  
+
+
+예외발생시 생성되는 인스턴스는 `catch` 블럭의 괄호()에 선언된 참조변수를 통해 접근할 수 있다.  
+이 인스턴스에는 발생한 예외에 대한 정보가 담겨져 있으며, `printStackTrace()`, `getMessage()` 를 통해  
+이 정보들을 얻어 예외의 발생원인을 알 수 있다.  
+
+```
+  printStackTrace()   예외발생당시 호출스택에 있던 메서드의 정보와 예외메시지를 화면에 출력  
+  getMessage()        발생한 예외클래스의 인스턴스에 저장된 메시지를 출력
+```
+
+예외가 발생하지 않는 경우에는 `catch` 블럭을 거치지 않고 `try-catch` 문 자체를 빠져나간다.  
+  
+<sup>* try-catch 문은 괄호 {} 를 생략할 수 없다.</sup>  
+
+
+#### multi catch  
+
+여러 개의 `catch` 블럭을 `|` 기호를 사용하여 하나의 블럭으로 합칠 수 있다.  
+중복된 코드를 줄일 수 있으며, 개수에는 특별히 제한은 없다.  
+그러나 멀티 catch 블럭에 연결된 예외클래스가 상속관계에 있다면 컴파일에러가 발생한다. 굳이 적을 필요가...  
+
+```
+try {
+  ...
+} catch (ExceptionA | ExceptionB | ExceptionC e) {
+  ...
+}
+```
+
+`멀티 catch` 는 하나의 블럭으로 여러 예외를 처리하는 것이기 때문에, 발생한 예외가 실제로 어떤 것인지는 알 수 없다.  
+때문에, `멀티 catch` 블럭에 사용되는 예외클래스들의 공통분모가 되는 조상 예외 클래스에 선언된 멤버만 사용할 수 있다.  
+
+
+### throw  
+### throws  
+### finally  
 
 
 
